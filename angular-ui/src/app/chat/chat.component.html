@@ -1,0 +1,42 @@
+<div class="chat-container">
+  <header class="chat-header">
+    <h1>AI Assistant</h1>
+    <p>Powered by LangChain · Azure OpenAI · Azure AI Search</p>
+  </header>
+
+  <section class="message-list" #messageList>
+    <div *ngIf="messages.length === 0" class="empty-state">
+      Ask me anything — I can search documents or do calculations.
+    </div>
+
+    <div
+      *ngFor="let msg of messages"
+      class="message"
+      [ngClass]="msg.role === 'user' ? 'message--user' : 'message--assistant'"
+    >
+      <div class="message__bubble">{{ msg.text }}</div>
+      <span class="message__time">{{ msg.timestamp | date: 'HH:mm' }}</span>
+    </div>
+
+    <div *ngIf="loading" class="message message--assistant">
+      <div class="message__bubble typing-indicator">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="errorMessage" class="error-bar">{{ errorMessage }}</div>
+
+  <footer class="chat-input-area">
+    <textarea
+      [(ngModel)]="userInput"
+      (keydown)="onEnter($event)"
+      placeholder="Type your question and press Enter…"
+      rows="1"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="send()" [disabled]="loading || !userInput.trim()">
+      {{ loading ? '…' : 'Send' }}
+    </button>
+  </footer>
+</div>

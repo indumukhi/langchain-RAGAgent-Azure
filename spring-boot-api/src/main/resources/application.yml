@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+agent:
+  fastapi-url: http://localhost:8000
+
+spring:
+  web:
+    cors:
+      allowed-origins: http://localhost:4200
+      allowed-methods: GET, POST, OPTIONS
